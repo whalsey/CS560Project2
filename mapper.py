@@ -2,13 +2,14 @@ class mapper:
     '''Takes a number of lines (with the line number appended after a space) and returns a list of words and indices'''
     stopWords = []
     def readStopWords(self):
-        file = "stopwords.txt"
-        lines = open(file).readlines()
-        for line in lines:
-            self.stopWords.append(line.strip())
+        if len(self.stopWords) == 0:
+            file = "stopwords.txt"
+            lines = open(file).readlines()
+            for line in lines:
+                self.stopWords.append(line.strip())
     def map(self, lines):
         ret = []
-        readStopWords()
+        self.readStopWords()
         for line in lines:
             line = line.strip()
             words = line.split(' ')
