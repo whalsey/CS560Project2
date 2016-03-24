@@ -1,0 +1,1 @@
+#read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
