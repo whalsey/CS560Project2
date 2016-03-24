@@ -8,6 +8,7 @@ class mapper:
             self.stopWords.append(line.strip())
     def map(self, lines):
         ret = []
+        readStopWords()
         for line in lines:
             line = line.strip()
             words = line.split(' ')
