@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import sys
 
 import reducer
@@ -30,7 +31,7 @@ class Mapper:
                 self.fout.write(word + "\t" + str(index)+'\n')
 
     def main(self, foutname="mappedOut.txt", finname="pg100Editted.txt"):
-        self.__init__(foutname, finname)
+        self.__init__()
         for line in self.fin:
             self.map(line)
 

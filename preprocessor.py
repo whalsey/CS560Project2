@@ -54,14 +54,14 @@ sorted_x = sorted(wordCounts.items(), key=operator.itemgetter(1),reverse=True)
 for pairs in sorted_x:
     wordCountFile.write(pairs[0].strip() + ":" + str(pairs[1]) + '\n')
 
-m = mapper.Mapper()
-m.main()#Generates MappedOut.txt
-mapped = open('mappedOut.txt', 'r').readlines()
-mapped.sort()
-sortedOut = open('sortedOut.txt', 'w')
-sortedOut.writelines(mapped)
-r = reducer()
-reduceFin= open('sortedOut.txt', 'r')
-r.main(reduceFin)
-
-
+# m = mapper.Mapper()
+# m.main()#Generates MappedOut.txt
+# mapped = open('mappedOut.txt', 'r').readlines()
+# mapped.sort()
+# sortedOut = open('sortedOut.txt', 'w')
+# sortedOut.writelines(mapped)
+# r = reducer()
+# reduceFin= open('sortedOut.txt', 'r')
+# r.main(reduceFin)
+#
+#
