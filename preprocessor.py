@@ -2,6 +2,11 @@
 import mapper
 from reducer import reducer
 
+r = reducer()
+reduceFin= open('sortedOut.txt', 'r')
+r.main(reduceFin)
+
+print("Done reducing")
 
 def realStrip(string, targets):
     targets = str(targets)
