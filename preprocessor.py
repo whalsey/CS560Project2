@@ -1,5 +1,6 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
 import mapper
+from reducer import reducer
 
 
 def realStrip(string, targets):
@@ -7,6 +8,7 @@ def realStrip(string, targets):
     for char in targets:
         string = string.replace(char, '')
     return string
+
 
 fileName = 'pg100.txt'
 
@@ -47,5 +49,14 @@ sorted_x = sorted(wordCounts.items(), key=operator.itemgetter(1),reverse=True)
 for pairs in sorted_x:
     wordCountFile.write(pairs[0].strip() + ":" + str(pairs[1]) + '\n')
 
-m = mapper.mapper
-mapret = mapper.mapper.map(self = m, lines = newLines)
+m = mapper.Mapper()
+m.main()#Generates MappedOut.txt
+mapped = open('mappedOut.txt', 'r').readlines()
+mapped.sort()
+sortedOut = open('sortedOut.txt', 'w')
+sortedOut.writelines(mapped)
+r = reducer()
+reduceFin= open('sortedOut.txt', 'r')
+r.main(reduceFin)
+
+
