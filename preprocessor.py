@@ -24,7 +24,7 @@ newLines = []
 index = 176
 for line in lines:
     if len(line.strip()) !=0:
-        newLine = realStrip(line, ".,:#$%^&*();<>[]?!\r\n").lower() + ' ' + str(index) + '\n'
+        newLine = realStrip(line, '.,:#$%^&*();<>[]?!\r\n"').lower() + ' ' + str(index) + '\n'
         found = newLine.find("\' ")
         if found != -1:
             newLine = newLine[1:found] + newLine[found+1:-1]+'\n'
