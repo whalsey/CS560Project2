@@ -1,5 +1,5 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
-import Mapper
+
 from Reducer import Reducer
 
 r = Reducer()
