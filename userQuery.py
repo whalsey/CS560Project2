@@ -32,8 +32,8 @@ def readStdIn(file):
         yield line.strip()
 
 while (1):
-    line = input("Enter query terms:")
-    if line is None:
+    line = input("Enter query terms, or q to exit:")
+    if line == "q":
         break
     line = line.strip()
     words = line.split(" ")
@@ -42,9 +42,10 @@ while (1):
         word = word.lower()
         if word in queryDict[key]:
             listolists.append(queryDict[key][word])
+            print(queryDict[key][word])
     if len(listolists) < 2:
         if len(listolists) == 0:
-            sys.stdout.write("The query you entered was not found")
+            print("The query you entered was not found.")
         elif len(listolists) == 1:
             writeList(listolists[0])
     else:
