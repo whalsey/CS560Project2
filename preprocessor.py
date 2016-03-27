@@ -4,6 +4,9 @@ fileName = 'pg100.txt'
 
 lines = open(fileName).readlines()[175:]
 
+test = "Have $1,000.00 for [fiddling] with (python)"
+test = test.strip(".,:#$%^&*()[]?!\n").lower() + ' ' + str(index) + '\n'
+
 wordCounts = {}
 newLines = []
 index = 176
