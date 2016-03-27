@@ -19,8 +19,11 @@ key = "Doc1"
 
 def writeList(list):
     base = ""
-    for item in list:
-        base += str(item) + ","
+    if len(list) == 0:
+        base = "No terms found"
+    else:
+        for item in list:
+            base += str(item) + ","
     print(base)
 
 
@@ -28,8 +31,10 @@ def readStdIn(file):
     for line in file:
         yield line.strip()
 
-data = readStdIn(sys.stdin)
-for line in data:
+while (1):
+    line = input("Enter query terms:")
+    if line is None:
+        break
     line = line.strip()
     words = line.split(" ")
     listolists = []
