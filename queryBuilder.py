@@ -18,7 +18,7 @@ for line in lines:
         try:
             templist.append(int(linenum))
         except ValueError:
-            pass
+            continue
     templist.sort()
     base[key][word] = templist
 
