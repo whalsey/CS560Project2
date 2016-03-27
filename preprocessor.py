@@ -1,6 +1,6 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
-import mapper
-from reducer import reducer
+import Mapper
+from Reducer import reducer
 
 r = reducer()
 reduceFin= open('sortedOut.txt', 'r')

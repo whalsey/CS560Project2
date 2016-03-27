@@ -1,11 +1,10 @@
 #!/usr/bin/python
 import sys
 
-import reducer
 class Mapper:
     '''Takes a number of lines (with the line number appended after a space) and returns a list of words and indices'''
     stopWords = []
-    r = reducer.reducer()
+
     fout = sys.stdout
     fin = sys.stdin
     def __init__(self, foutname = None, finname = None):
@@ -30,10 +29,11 @@ class Mapper:
             if word not in self.stopWords:
                 self.fout.write(word + "\t" + str(index)+'\n')
 
-    def main(self, foutname="mappedOut.txt", finname="pg100Editted.txt"):
-        self.__init__()
-        for line in self.fin:
-            self.map(line)
+    @staticmethod
+    def main(foutname="mappedOut.txt", finname="pg100Editted.txt"):
+        m = Mapper()
+        for line in m.fin:
+            m.map(line)
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    Mapper.main(None, None)
