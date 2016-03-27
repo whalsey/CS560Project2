@@ -2,7 +2,7 @@
 import sys
 
 
-class reducer:
+class Reducer:
     '''Reduces'''
 
     @staticmethod
@@ -10,13 +10,15 @@ class reducer:
         word, index = line.split("\t")
         return word, index
 
-    def main(self, fin):
-        fout = open('finalOut.txt', 'w')
+    @staticmethod
+    def main(fin):
+        r = Reducer()
+        #fout = open('finalOut.txt', 'w')
         current_word = None
         current_list = []
         for line in fin:
             line = line.rstrip()
-            word, linenum = self.reduce(line)
+            word, linenum = r.reduce(line)
 
             if current_word is None:
                 current_word = word
@@ -28,7 +30,7 @@ class reducer:
                 outline = current_word + ":"
                 for item in current_list:
                     outline += item + ", "
-                fout.write(outline + "\n")
+                print(outline)
                 current_word = word
                 current_list = [linenum]
 
