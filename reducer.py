@@ -30,7 +30,8 @@ class Reducer:
                 outline = current_word + ":"
                 for item in current_list:
                     outline += item + ", "
-                print(outline)
+                fout.write(outline+"\n")
+
                 current_word = word
                 current_list = [linenum]
 

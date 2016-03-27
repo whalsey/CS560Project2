@@ -1,11 +1,9 @@
 #!/usr/bin/python
 import sys
 
-import Reducer
 class Mapper:
     '''Takes a number of lines (with the line number appended after a space) and returns a list of words and indices'''
     stopWords = []
-    r = Reducer.Reducer()
     fout = sys.stdout
     fin = sys.stdin
     def __init__(self, foutname: str = None, finname: str = None) -> None:
@@ -38,4 +36,4 @@ class Mapper:
             m.map(line)
 
 if __name__ == "__main__":
-    Mapper.main("", "")
+    Mapper.main(None, None)

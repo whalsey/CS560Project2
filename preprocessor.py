@@ -3,7 +3,7 @@ import Mapper
 from Reducer import Reducer
 
 r = Reducer()
-reduceFin= open('sortedOut.txt', 'r')
+reduceFin = open('sortedOut.txt', 'r')
 r.main(reduceFin)
 
 print("Done reducing")
