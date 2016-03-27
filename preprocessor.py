@@ -63,5 +63,4 @@ sortedOut.writelines(mapped)
 r = Reducer()
 reduceFin= open('sortedOut.txt', 'r')
 r.main(reduceFin)
-#
-#
+
