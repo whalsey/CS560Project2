@@ -1,4 +1,6 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
+import mapper
+
 
 def realStrip(string, targets):
     targets = str(targets)
@@ -15,7 +17,7 @@ newLines = []
 index = 176
 for line in lines:
     if len(line.strip()) !=0:
-        newLine = realStrip(line, ".,:#$%^&*();<>[]?!\n").lower() + ' ' + str(index) + '\n'
+        newLine = realStrip(line, ".,:#$%^&*();<>[]?!\r\n").lower() + ' ' + str(index) + '\n'
         found = newLine.find("\' ")
         if found != -1:
             newLine = newLine[1:found] + newLine[found+1:-1]+'\n'
@@ -44,3 +46,6 @@ sorted_x = sorted(wordCounts.items(), key=operator.itemgetter(1),reverse=True)
 
 for pairs in sorted_x:
     wordCountFile.write(pairs[0].strip() + ":" + str(pairs[1]) + '\n')
+
+m = mapper.mapper
+mapret = mapper.mapper.map(self = m, lines = newLines)
