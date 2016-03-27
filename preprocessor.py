@@ -1,18 +1,21 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
 
+def realStrip(string, targets):
+    targets = str(targets)
+    for char in targets:
+        string = string.replace(char, '')
+    return string
+
 fileName = 'pg100.txt'
 
 lines = open(fileName).readlines()[175:]
-
-test = "Have $1,000.00 for [fiddling] with (python)"
-test = test.strip(".,:#$%^&*()[]?!\n").lower() + ' ' + str(index) + '\n'
 
 wordCounts = {}
 newLines = []
 index = 176
 for line in lines:
     if len(line.strip()) !=0:
-        newLine = line.strip(".,:#$%^&*()[]?!\n").lower() + ' ' + str(index) + '\n'
+        newLine = realStrip(line, ".,:#$%^&*();<>[]?!\n").lower() + ' ' + str(index) + '\n'
         found = newLine.find("\' ")
         if found != -1:
             newLine = newLine[1:found] + newLine[found+1:-1]+'\n'
