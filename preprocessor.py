@@ -1,3 +1,10 @@
+##
+#   preprocessor.py written by
+#       Isaac Sherman   isherman@vols.utk.edu
+#       William Halsey  whalsey@vols.utk.edu
+#
+
+
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
 import Mapper
 from Reducer import Reducer
