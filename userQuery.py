@@ -31,10 +31,9 @@ def readStdIn(file):
     for line in file:
         yield line.strip()
 
-while (1):
-    line = input("Enter query terms, or q to exit:")
-    if line == "q":
-        break
+
+def doQuery():
+    global line
     line = line.strip()
     words = line.split(" ")
     listolists = []
@@ -53,4 +52,11 @@ while (1):
         for i in range(2, len(listolists)):
             baseList = intersect(baseList, listolists[i])
         writeList(baseList)
+
+
+while (1):
+    line = input("Enter query terms, or q to exit:")
+    if line == "q":
+        break
+    doQuery()
 
