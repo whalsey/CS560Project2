@@ -11,14 +11,14 @@ class Reducer:
         return word, index
 
     @staticmethod
-    def main(fin):
-        r = Reducer()
-        #fout = open('finalOut.txt', 'w')
+    def main(fin, fout = None):
+        if fout is None:
+            fout = open('finalOut.txt', 'w')
         current_word = None
         current_list = []
         for line in fin:
             line = line.rstrip()
-            word, linenum = r.reduce(line)
+            word, linenum = Reducer.reduce(line)
 
             if current_word is None:
                 current_word = word
@@ -36,4 +36,4 @@ class Reducer:
                 current_list = [linenum]
 
     if __name__ == "__main__":
-        main(sys.stdin)
+        main(sys.stdin, sys.stdout)
