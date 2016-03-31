@@ -41,7 +41,6 @@ def doQuery():
         word = word.lower()
         if word in queryDict[key]:
             listolists.append(queryDict[key][word])
-            print(queryDict[key][word])
     if len(listolists) < 2:
         if len(listolists) == 0:
             print("The query you entered was not found.")
@@ -59,4 +58,4 @@ while (1):
     if line == "q":
         break
     doQuery()
-
+#1mdoinbf@r@3ED
