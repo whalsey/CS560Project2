@@ -2,11 +2,13 @@
 import Mapper
 from Reducer import Reducer
 import operator
+import sys
 
-r = Reducer()
-reduceFin = open('sortedOut.txt', 'r')
-r.main(reduceFin)
-print("Done reducing")
+
+#r = Reducer()
+#reduceFin = open('sortedOut.txt', 'r')
+#r.main(reduceFin)
+#print("Done reducing")
 
 def realStrip(string, targets):
     targets = str(targets)
@@ -16,6 +18,9 @@ def realStrip(string, targets):
 
 
 fileName = 'pg100.txt'
+
+if len(sys.argv) > 1:
+    fileName = sys.argv[1]
 
 lines = open(fileName).readlines()[175:]
 
@@ -40,7 +45,8 @@ for line in lines:
         newLines.append(newLine)
     index += 1
 
-newFile = open('processed/pg100Editted.txt', 'w')
+outFile = fileName.strip(".txt") + "Editted.txt"
+newFile = open('./processed/'+outFile, 'w')
 newFile.writelines(newLines)
 
 wordCountFile = open('wc.txt', 'w')
