@@ -1,6 +1,7 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
 import Mapper
 from Reducer import Reducer
+import operator
 
 r = Reducer()
 reduceFin = open('sortedOut.txt', 'r')
@@ -40,13 +41,11 @@ for line in lines:
         newLines.append(newLine)
     index += 1
 
-newFile = open('pg100Editted.txt', 'w')
-for line in newLines:
-    newFile.write(line)
+newFile = open('processed/pg100Editted.txt', 'w')
+newFile.writelines(newLines)
 
 wordCountFile = open('wc.txt', 'w')
 
-import operator
 
 sorted_x = sorted(wordCounts.items(), key=operator.itemgetter(1),reverse=True)
 

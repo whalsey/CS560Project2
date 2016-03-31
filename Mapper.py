@@ -62,7 +62,7 @@ class Mapper:
 
 if __name__ == "__main__":
     arg1 = None
-    arg2 = "./"
+    arg2 = "./processed/"
     if len(sys.argv) > 2:
         arg1 = sys.argv[2]
         arg2 = sys.argv[1]
