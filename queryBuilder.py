@@ -4,13 +4,13 @@ infile = "finalOut.txt"
 fin = open(infile, 'r')
 lines = fin.readlines()
 
-key = "Doc1"
-base = {key:{}}
+base = {}
 for line in lines:
     line = line.strip()
-    word, elems = line.split(":")
-    if word == "yorick":
-        pass
+    tag, word, elems = line.split(":")
+    if tag not in base.keys():
+        base[tag] = {}
+
     linenums = elems.split(",")
     templist = []
     for linenum in linenums:
@@ -20,6 +20,6 @@ for line in lines:
         except ValueError:
             continue
     templist.sort()
-    base[key][word] = templist
+    base[tag][word] = templist
 
 pickle.dump(base, open("queryDict.p", 'wb'))

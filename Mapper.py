@@ -8,6 +8,7 @@ class Mapper:
     listOfFiles = []
     fout = sys.stdout
     fin = sys.stdin
+
     def __init__(self, foutname: str = None, dirname: str = None) -> None:
         if foutname is not None:
             self.fout = open(foutname, 'w')
@@ -21,7 +22,7 @@ class Mapper:
             for line in lines:
                 self.stopWords.append(line.strip().strip())
 
-    def processLine(self, line):
+    def processLine(self, line, tag):
         line = line.strip()
         words = line.split(' ')
         try:
@@ -33,7 +34,7 @@ class Mapper:
         words.pop()#Pop the appended line number
         for word in words:
             if word not in self.stopWords:
-                self.fout.write(word + "\t" + str(index)+'\n')
+                self.fout.write(tag + ":" + word + "\t" + str(index)+'\n')
 
 
     def map(self, fileName):
@@ -45,11 +46,19 @@ class Mapper:
             return
 
         for line in file:
-            self.fout.write(fileName + ":")
-            self.processLine(line)
+            self.processLine(line, fileName)
 
     def readDirectory(self, dirname):
-        self.listOfFiles = os.listdir(dirname)
+        self.directoryName = dirname
+        baselist = os.listdir(dirname)
+        for file in baselist:
+            if(dirname.endswith("/") or dirname.endswith("\\")):
+                self.listOfFiles.append(dirname+file)
+            else:
+                self.listOfFiles.append(dirname + "/" + file)
+
+
+
 
 
     @staticmethod

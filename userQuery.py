@@ -14,9 +14,6 @@ except:
     import queryBuilder
     queryDict = pickle.load(open("queryDict.p", 'rb'))
 
-key = "Doc1"
-
-
 def writeList(list):
     base = ""
     if len(list) == 0:
@@ -24,6 +21,7 @@ def writeList(list):
     else:
         for item in list:
             base += str(item) + ","
+    base = base.strip(",")
     print(base)
 
 
@@ -32,30 +30,29 @@ def readStdIn(file):
         yield line.strip()
 
 
-def doQuery():
-    global line
+def doQuery(line):
     line = line.strip()
     words = line.split(" ")
     listolists = []
-    for word in words:
-        word = word.lower()
-        if word in queryDict[key]:
-            listolists.append(queryDict[key][word])
-    if len(listolists) < 2:
-        if len(listolists) == 0:
-            print("The query you entered was not found.")
-        elif len(listolists) == 1:
-            writeList(listolists[0])
-    else:
-        baseList = intersect(listolists[0], listolists[1])
-        for i in range(2, len(listolists)):
-            baseList = intersect(baseList, listolists[i])
-        writeList(baseList)
+    for key in queryDict.keys():
+        for word in words:
+            word = word.lower()
+            if word in queryDict[key]:
+                listolists.append(queryDict[key][word])
+        if len(listolists) < 2:
+            if len(listolists) == 0:
+                print("The query you entered was not found.")
+            elif len(listolists) == 1:
+                writeList(listolists[0])
+        else:
+            baseList = intersect(listolists[0], listolists[1])
+            for i in range(2, len(listolists)):
+                baseList = intersect(baseList, listolists[i])
+            writeList(baseList)
 
 
 while (1):
     line = input("Enter query terms, or q to exit:")
     if line == "q":
         break
-    doQuery()
-#1mdoinbf@r@3ED
+    doQuery(line)

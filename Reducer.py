@@ -1,25 +1,31 @@
 #!/usr/bin/python
 import sys
 
+reducerUseStdOut = False
 
 class Reducer:
     '''Reduces'''
-
     @staticmethod
     def reduce(line):
         word, index = line.split("\t")
-        return word, index
+        tag, word = word.split(":")
+        return tag, word, index
 
     @staticmethod
     def main(fin, fout = None):
         if fout is None:
-            fout = open('finalOut.txt', 'w')
+            if reducerUseStdOut:
+                fout = sys.stdout
+            else:
+                fout = open('finalOut.txt', 'w')
         current_word = None
+        current_tag = None
         current_list = []
         for line in fin:
             line = line.rstrip()
-            word, linenum = Reducer.reduce(line)
-
+            tag, word, linenum = Reducer.reduce(line)
+            if current_tag is None:
+                current_tag = tag
             if current_word is None:
                 current_word = word
             if len(word) == 0:
@@ -27,9 +33,10 @@ class Reducer:
             elif word == current_word:
                 current_list.append(linenum)
             else:
-                outline = current_word + ":"
+                outline = tag + ":" + current_word + ":"
                 for item in current_list:
                     outline += item + ", "
+                outline = outline.rstrip(", ")
                 fout.write(outline+"\n")
 
                 current_word = word
