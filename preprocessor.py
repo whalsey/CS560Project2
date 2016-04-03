@@ -8,12 +8,14 @@
 #read doc, add line numbers to everything, figure out stop words (I suggest reading from a file)
 import Mapper
 from Reducer import Reducer
+import operator
+import sys
 
-r = Reducer()
-reduceFin = open('sortedOut.txt', 'r')
-r.main(reduceFin)
 
-print("Done reducing")
+#r = Reducer()
+#reduceFin = open('sortedOut.txt', 'r')
+#r.main(reduceFin)
+#print("Done reducing")
 
 def realStrip(string, targets):
     targets = str(targets)
@@ -23,6 +25,9 @@ def realStrip(string, targets):
 
 
 fileName = 'pg100.txt'
+
+if len(sys.argv) > 1:
+    fileName = sys.argv[1]
 
 lines = open(fileName).readlines()[175:]
 
@@ -47,13 +52,12 @@ for line in lines:
         newLines.append(newLine)
     index += 1
 
-newFile = open('pg100Editted.txt', 'w')
-for line in newLines:
-    newFile.write(line)
+outFile = fileName.strip(".txt") + "Editted.txt"
+newFile = open('./processed/'+outFile, 'w')
+newFile.writelines(newLines)
 
 wordCountFile = open('wc.txt', 'w')
 
-import operator
 
 sorted_x = sorted(wordCounts.items(), key=operator.itemgetter(1),reverse=True)
 
@@ -61,13 +65,11 @@ sorted_x = sorted(wordCounts.items(), key=operator.itemgetter(1),reverse=True)
 for pairs in sorted_x:
     wordCountFile.write(pairs[0].strip() + ":" + str(pairs[1]) + '\n')
 
-m = Mapper.Mapper()
-m.main()#Generates MappedOut.txt
+Mapper.Mapper.main("mappedOut.txt", "./processed/")  # Generates MappedOut.txt
 mapped = open('mappedOut.txt', 'r').readlines()
 mapped.sort()
 sortedOut = open('sortedOut.txt', 'w')
 sortedOut.writelines(mapped)
 r = Reducer()
-reduceFin= open('sortedOut.txt', 'r')
+reduceFin = open('sortedOut.txt', 'r')
 r.main(reduceFin)
-

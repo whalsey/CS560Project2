@@ -14,9 +14,6 @@ except:
     import queryBuilder
     queryDict = pickle.load(open("queryDict.p", 'rb'))
 
-key = "Doc1"
-
-
 def writeList(list):
     base = ""
     if len(list) == 0:
@@ -24,6 +21,7 @@ def writeList(list):
     else:
         for item in list:
             base += str(item) + ","
+    base = base.strip(",")
     print(base)
 
 
@@ -31,18 +29,19 @@ def readStdIn(file):
     for line in file:
         yield line.strip()
 
-while (1):
-    line = input("Enter query terms, or q to exit:")
-    if line == "q":
-        break
+
+def doQuery(line):
     line = line.strip()
     words = line.split(" ")
     listolists = []
-    for word in words:
-        word = word.lower()
-        if word in queryDict[key]:
-            listolists.append(queryDict[key][word])
-            print(queryDict[key][word])
+    for key in queryDict.keys():
+        for word in words:
+            word = word.lower()
+            if word in queryDict[key]:
+                temtem = []
+                for linenum in queryDict[key][word]:
+                    temtem.append(key + ":" + str(linenum))
+                listolists.append(temtem)
     if len(listolists) < 2:
         if len(listolists) == 0:
             print("The query you entered was not found.")
@@ -54,3 +53,9 @@ while (1):
             baseList = intersect(baseList, listolists[i])
         writeList(baseList)
 
+
+while (1):
+    line = input("Enter query terms, or q to exit:")
+    if line == "q":
+        break
+    doQuery(line)
