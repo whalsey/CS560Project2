@@ -3,11 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <title>Query</title>
+
+
 </head>
+
 <body>
-<form>manson:<br>
-<input type="text" name="manson"><br> <button id="dave">manson it!</button></form>
-<scipt>var candy= document.getElementById("manson");candy.addEventListner("keydown",function(e){ if (e.keyCode===13){validate(e){
-funtion validate(e){var text=e.value;</scipt>
+
+<script type = text/javascript>
+
+    var queryData;
+    request = new XMLHttpRequest();
+    request.open('GET', './data/queryDict.json', true);
+
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400){
+        // Success!
+        queryData = data = JSON.parse(request.responseText);
+      } else {
+        // We reached our target server, but it returned an error
+
+      }
+    };
+
+    request.onerror = function() {
+      // There was a connection error of some sort
+    };
+
+    request.send();
+//Done with loading data
+
+    var documentTags = getKeysFromAA(queryData)
+
+    var queryBox= document.getElementById("queryBox");
+    words = queryBox.value.split(" ");
+
+    function updateQuery(){
+        if(queryBox == null)
+            queryBox = document.getElementById("queryBox");
+       words = queryBox.value.split(" ");
+//        var nodeString = 'Results (not really):<br>';
+//        for(var i = 0; i < words.length; ++i){
+//        nodeString += (words[i]+"<br>")
+//           }
+//        document.getElementById("results").innerHTML = nodeString;
+        }
+/*def intersect(list1, list2):
+    ret = []
+    for item in list1:
+        if item in list2:
+            ret.append(item)
+    return ret
+*/
+
+    function getKeysFromAA(associativeArray){
+        var keys = [];
+        for (var key in associativeArray){
+            if(associativeArray.hasOwnProperty(key)){
+                keys.push(key)
+            }
+        }
+    }
+
+    function doQuery(){
+        updateQuery();
+        var listOLists = [];
+        for(var tag in documentTags){
+            for(var word in words){
+            word = word.toLowerCase();
+                if(queryData[tag][word] != null)
+                {
+                    var tempList = [];
+                    for (var lineNum in queryData[tag][word]){
+                        tempList.push(tag + ":" + lineNum);
+                    }
+                    listOLists.push(tempList);
+
+                }
+            }
+        }
+        }
+//    if len(listolists) < 2:
+//        if len(listolists) == 0:
+//            print("The query you entered was not found.")
+//        elif len(listolists) == 1:
+//            writeList(listolists[0])
+//    else:
+//        baseList = intersect(listolists[0], listolists[1])
+//        for i in range(2, len(listolists)):
+//            baseList = intersect(baseList, listolists[i])
+//        writeList(baseList)
+
+
+
+</script>
+
+Enter Query Terms:<br>
+<input type="text" id="queryBox" onchange = updateQuery()> <br> <button id="Submit">Do Query</button>
+<div>
+</div>
+<p id = "results"></p>
+
 </body>
 </html>
