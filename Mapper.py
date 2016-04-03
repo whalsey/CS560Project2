@@ -37,16 +37,10 @@ class Mapper:
                 self.fout.write(tag + ":" + word + "\t" + str(index)+'\n')
 
 
-    def map(self, fileName):
-        file = []
-        try:
-            file = open(fileName, 'r').readlines()
-        except IOError:
-            print("Directory")
-            return
-
-        for line in file:
-            self.processLine(line, fileName)
+    def map(self):
+        for line in self.fin:
+            filename = os.environ['map_input_file']
+            self.processLine(line, filename)
 
     def readDirectory(self, dirname):
         self.directoryName = dirname
@@ -58,10 +52,9 @@ class Mapper:
                 self.listOfFiles.append(dirname + "/" + file)
 
     @staticmethod
-    def main(foutname="mappedOut.txt", dirname="pg100Editted.txt"):
+    def main(foutname=None, dirname="pg100Editted.txt"):
         m = Mapper(foutname, dirname)
-        for file in m.listOfFiles:
-            m.map(file)
+        m.map
 
 if __name__ == "__main__":
     arg1 = None

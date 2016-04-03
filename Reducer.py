@@ -42,5 +42,5 @@ class Reducer:
                 current_word = word
                 current_list = [linenum]
 
-    if __name__ == "__main__":
-        main(sys.stdin, sys.stdout)
+if __name__ == "__main__":
+    Reducer.main(sys.stdin, sys.stdout)
