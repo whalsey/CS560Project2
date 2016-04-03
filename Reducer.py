@@ -33,7 +33,7 @@ class Reducer:
             elif word == current_word:
                 current_list.append(linenum)
             else:
-                outline = tag + ":" + current_word + ":"
+                outline = tag + "|:" + current_word + "|:"
                 for item in current_list:
                     outline += item + ", "
                 outline = outline.rstrip(", ")
