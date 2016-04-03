@@ -8,7 +8,8 @@ class Reducer:
     @staticmethod
     def reduce(line):
         word, index = line.split("\t")
-        tag, word = word.split(":")
+        # sys.stderr.write(line + "\n")
+        tag, word = word.split("|:")
         return tag, word, index
 
     @staticmethod
@@ -33,7 +34,7 @@ class Reducer:
             elif word == current_word:
                 current_list.append(linenum)
             else:
-                outline = tag + ":" + current_word + ":"
+                outline = tag + "|:" + current_word + "|:"
                 for item in current_list:
                     outline += item + ", "
                 outline = outline.rstrip(", ")

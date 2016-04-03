@@ -13,7 +13,7 @@ lines = fin.readlines()
 base = {}
 for line in lines:
     line = line.strip()
-    tag, word, elems = line.split(":")
+    tag, word, elems = line.split("|:")
     if tag not in base.keys():
         base[tag] = {}
 

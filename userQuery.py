@@ -16,12 +16,24 @@ except:
 
 def writeList(list):
     base = ""
+    temp = {}
     if len(list) == 0:
         base = "No terms found"
     else:
         for item in list:
-            base += str(item) + ","
-    base = base.strip(",")
+            tag, lines = item.split("|:")
+            if tag not in temp.keys():
+                temp[tag] = []
+
+            temp[tag].append(lines)
+
+        for item in temp.keys():
+            base += "\n" + str(item) + " |: "
+
+            for line in temp[item]:
+                base += line + ", "
+
+    base = base.rstrip(", ") + "\n"
     print(base)
 
 
@@ -40,7 +52,7 @@ def doQuery(line):
             if word in queryDict[key]:
                 temtem = []
                 for linenum in queryDict[key][word]:
-                    temtem.append(key + ":" + str(linenum))
+                    temtem.append(key + "|:" + str(linenum))
                 listolists.append(temtem)
     if len(listolists) < 2:
         if len(listolists) == 0:
@@ -55,7 +67,7 @@ def doQuery(line):
 
 
 while (1):
-    line = input("Enter query terms, or q to exit:")
+    line = str(input("Enter query terms, or q to exit: "))
     if line == "q":
         break
     doQuery(line)
