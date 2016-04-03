@@ -13,7 +13,7 @@ class Mapper:
         if foutname is not None:
             self.fout = open(foutname, 'w')
         self.readDirectory(dirname)
-        sehlf.readStopWords()
+        self.readStopWords()
 
     def readStopWords(self):
         if len(self.stopWords) == 0:

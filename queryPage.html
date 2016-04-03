@@ -10,6 +10,30 @@
 <body>
 
 <script type = text/javascript>
+
+    function loadJSON(path, success, error)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function()
+    {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (success)
+                    success(JSON.parse(xhr.responseText));
+            } else {
+                if (error)
+                    error(xhr);
+            }
+        }
+    };
+    xhr.open("GET", path, true);
+    xhr.send();
+}
+
+    var queryData = loadJSON('/data/queryDict.json',
+            function(data) { console.log(data); },
+            function(xhr) { console.error(xhr); }
+);
     queryBox= document.getElementById("queryBox");
     words = queryBox.value.split(" ");
 
@@ -24,14 +48,11 @@
         document.getElementById("results").innerHTML = nodeString;
         }
 
-    var queryData = jQuery.getJSON("/data/queryDict.json", callback = function (e) {
-        console.log("Successfully loaded JSON");
-    });
 
 </script>
 
 Enter Query Terms:<br>
-<input type="text" id="queryBox" onchange = updateQuery()><br> <button id="Submit">Do Query</button>
+<input type="text" id="queryBox" onchange = updateQuery()> <br> <button id="Submit">Do Query</button>
 <div>
 </div>
 <p id = "results"></p>
