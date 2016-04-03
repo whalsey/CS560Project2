@@ -3,11 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Query</title>
+
+
 </head>
+
 <body>
-<form>manson:<br>
-<input type="text" name="manson"><br> <button id="dave">manson it!</button></form>
-<scipt>var candy= document.getElementById("manson");candy.addEventListner("keydown",function(e){ if (e.keyCode===13){validate(e){
-funtion validate(e){var text=e.value;</scipt>
+
+<script type = text/javascript>
+    queryBox= document.getElementById("queryBox");
+    words = queryBox.value.split(" ");
+
+    function updateQuery(){
+        if(queryBox == null)
+            queryBox = document.getElementById("queryBox");
+       words = queryBox.value.split(" ");
+        var nodeString = 'Results (not really):<br>';
+        for(var i = 0; i < words.length; ++i){
+        nodeString += (words[i]+"<br>")
+           }
+        document.getElementById("results").innerHTML = nodeString;
+        }
+
+    var queryData = jQuery.getJSON("/data/queryDict.json", callback = function (e) {
+        console.log("Successfully loaded JSON");
+    });
+
+</script>
+
+Enter Query Terms:<br>
+<input type="text" id="queryBox" onchange = updateQuery()><br> <button id="Submit">Do Query</button>
+<div>
+</div>
+<p id = "results"></p>
+
 </body>
 </html>
