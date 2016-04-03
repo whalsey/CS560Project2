@@ -1,3 +1,9 @@
+##
+#   queryBuilder.py written by
+#       Isaac Sherman   isherman@vols.utk.edu
+#       William Halsey  whalsey@vols.utk.edu
+#
+
 import pickle
 
 infile = "finalOut.txt"
