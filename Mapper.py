@@ -9,11 +9,11 @@ class Mapper:
     fout = sys.stdout
     fin = sys.stdin
 
-    def __init__(self, foutname: str = None, dirname: str = None) -> None:
+    def __init__(self, foutname = None, dirname  = None): # -> None:
         if foutname is not None:
             self.fout = open(foutname, 'w')
         self.readDirectory(dirname)
-        sehlf.readStopWords()
+        self.readStopWords()
 
     def readStopWords(self):
         if len(self.stopWords) == 0:
@@ -57,17 +57,11 @@ class Mapper:
             else:
                 self.listOfFiles.append(dirname + "/" + file)
 
-
-
-
-
     @staticmethod
     def main(foutname="mappedOut.txt", dirname="pg100Editted.txt"):
         m = Mapper(foutname, dirname)
         for file in m.listOfFiles:
             m.map(file)
-
-
 
 if __name__ == "__main__":
     arg1 = None
