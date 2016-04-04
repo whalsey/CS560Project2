@@ -62,7 +62,7 @@ for line in lines:
         newLines.append(newLine)
     index += 1
 
-outFile = fileName.strip(".txt") + "Editted.txt"
+outFile = fileName.strip(".txt") + "Edited.txt"
 newFile = open('./processed/'+outFile, 'w')
 newFile.writelines(newLines)
 
