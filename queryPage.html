@@ -168,13 +168,28 @@
         }
         }
 
+    function addListener(){
+        console.log("In the addListener function");
+       var button =document.getElementById("Submit");
+        console.log(button)
+        button.addEventListener("onkeydown", function(e) {
+                console.log("In the listener");
+        console.log(e);
+    });
+    }
 
-document.getElementById("Submit").addEventListener()
+
 </script>
 
 Enter Query Terms:<br>
-<input type="text" id="queryBox" onchange = updateQuery()> <br> <button id="Submit" onclick = doQuery()
-                                                                         disabled = true>Do Query</button>
+<input type="text" id="queryBox" onchange = updateQuery()> <br>
+<button id="Submit" onclick = doQuery()
+        onkeydown= wasEnter() disabled = true>Do Query</button>
+
+<script type = text/javascript>
+addListener();
+</script>
+
 <div>
 </div>
 <p id = "results"></p>
