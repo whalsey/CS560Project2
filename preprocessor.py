@@ -24,18 +24,28 @@ def realStrip(string, targets):
     return string
 
 
+USAGE = "python preprocessor fileName startingIndex\n filename is 'pg100.txt' by default, and startingIndex is 175"
+
 fileName = 'pg100.txt'
 
 if len(sys.argv) > 1:
     fileName = sys.argv[1]
 
-lines = open(fileName).readlines()[175:]
+startingIndex = 175
+if len(sys.argv) > 2:
+    try:
+        startingIndex = int(sys.argv[2])
+    except ValueError:
+        print(USAGE)
+        exit()
+
+lines = open(fileName).readlines()[startingIndex:]
 
 wordCounts = {}
 newLines = []
-index = 176
+index = startingIndex+1
 for line in lines:
-    if len(line.strip()) !=0:
+    if len(line.strip()) != 0:
         newLine = realStrip(line, '.,:#$%^&*();<>[]?!\r\n"').lower() + ' ' + str(index) + '\n'
         found = newLine.find("\' ")
         if found != -1:

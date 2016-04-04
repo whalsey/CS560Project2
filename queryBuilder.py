@@ -3,10 +3,15 @@
 #       Isaac Sherman   isherman@vols.utk.edu
 #       William Halsey  whalsey@vols.utk.edu
 #
-
+import sys
 import pickle
 
+
 infile = "finalOut.txt"
+
+if len(sys.argv) > 1:
+    infile = sys.argv[1]
+
 fin = open(infile, 'r')
 lines = fin.readlines()
 
