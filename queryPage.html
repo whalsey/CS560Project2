@@ -10,9 +10,11 @@
 <body>
 
 <script type = text/javascript>
-
+    var words;
     var queryData;
-    request = new XMLHttpRequest();
+    var documentTags;
+    var data;
+    var request = new XMLHttpRequest();
     request.open('GET', './data/queryDict.json', true);
 
     request.onload = function() {
@@ -20,85 +22,159 @@
         // Success!
         queryData = data = JSON.parse(request.responseText);
       } else {
+          console.log("Error communicating with server");
         // We reached our target server, but it returned an error
 
       }
     };
 
     request.onerror = function() {
+        console.log("Error in loading JSON");
       // There was a connection error of some sort
     };
+
+    request.onloadend = doneLoading;
 
     request.send();
 //Done with loading data
 
-    var documentTags = getKeysFromAA(queryData)
 
-    var queryBox= document.getElementById("queryBox");
+
+    function doneLoading(){
+        console.log("QueryData should be loaded.");
+    for(var key in queryData) console.log("Key: key")
     words = queryBox.value.split(" ");
-
+    document.getElementById("Submit").disabled=false;
+    }
     function updateQuery(){
         if(queryBox == null)
             queryBox = document.getElementById("queryBox");
        words = queryBox.value.split(" ");
-//        var nodeString = 'Results (not really):<br>';
-//        for(var i = 0; i < words.length; ++i){
-//        nodeString += (words[i]+"<br>")
-//           }
-//        document.getElementById("results").innerHTML = nodeString;
+        if(typeof(queryData) === 'undefined'){
+            queryData = JSON.parse(request.responseText);
         }
-/*def intersect(list1, list2):
-    ret = []
-    for item in list1:
-        if item in list2:
-            ret.append(item)
-    return ret
-*/
+        documentTags = getKeysFromAA(queryData);
+    }
 
     function getKeysFromAA(associativeArray){
+        console.log("Getting keys from dictionary");
         var keys = [];
         for (var key in associativeArray){
-            if(associativeArray.hasOwnProperty(key)){
-                keys.push(key)
+            if(associativeArray.hasOwnProperty(key))
+                keys.push(key);
+        }
+        return keys;
+    }
+
+    function writeList(list){
+        console.log("Writing list");
+        var outstr = "";
+        var outDict = {};
+        if(list.length === 0){
+            outstr = "No results founder";
+        }
+        else {
+            for (var item in list) {
+                item = list[item];
+                var temp = item.split("|:");
+                var head = temp[0];
+                var lines = temp[1];
+                console.log("Head = " + head + " and lines = " + lines);
+                if (typeof(outDict[head]) === 'undefined') {
+                    outDict[head] = []
+                }
+                outDict[head].push(lines);
+            }
+            console.log(outDict);
+            var keys = getKeysFromAA(outDict);
+            for (var key in keys) {
+                console.log("Getting ready to write")
+                key = keys[key];
+                outstr += "<br>" + key + "|:";
+                for (var line in outDict[key]) {
+                    line = outDict[key][line];
+                    outstr += line + ", "
+                }
             }
         }
+        outstr = outstr.substr(0, outstr.length-2);
+        document.getElementById("results").innerHTML = outstr;
+
+
+    }
+
+    function intersect_safe(a, b)
+    {
+        console.log("Intersecting");
+
+      var result = [];
+        for(var i = 0; i < a.length; ++i){
+            var aword = a[i];
+            for(var j = 0; j < b.length; ++j){
+                var bword = b[j];
+                if(bword === aword){
+                    result.push(aword);
+
+                }
+            }
+        }
+
+      return result;
     }
 
     function doQuery(){
+        console.log("Doing query");
         updateQuery();
+        console.log("Query updated, words = " + words)
         var listOLists = [];
         for(var tag in documentTags){
+            tag = documentTags[tag];
+            console.log("Going through tags (tag  = " + tag + ")");
             for(var word in words){
-            word = word.toLowerCase();
+                console.log("Going through words (word  = " + word + ")");
+            word = words[word].toLowerCase();
+                console.log("word now = " + word)
                 if(queryData[tag][word] != null)
                 {
+                    console.log("[Tag][word] is not null!")
                     var tempList = [];
                     for (var lineNum in queryData[tag][word]){
-                        tempList.push(tag + ":" + lineNum);
+                        lineNum = queryData[tag][word][lineNum];
+                        tempList.push(tag + "|:" + lineNum);
                     }
+                    console.log("tempList, listolists");
+                    console.log(tempList);
+                    console.log(listOLists);
                     listOLists.push(tempList);
 
                 }
             }
         }
+        if(listOLists.length < 2){
+            if(listOLists.length === 0){
+                document.getElementById("results").innerHTML = "No results found";
+            }
+            else{
+                writeList(listOLists[0])
+            }
+
         }
-//    if len(listolists) < 2:
-//        if len(listolists) == 0:
-//            print("The query you entered was not found.")
-//        elif len(listolists) == 1:
-//            writeList(listolists[0])
-//    else:
-//        baseList = intersect(listolists[0], listolists[1])
-//        for i in range(2, len(listolists)):
-//            baseList = intersect(baseList, listolists[i])
-//        writeList(baseList)
+        else{
+            var baselist = intersect_safe(listOLists[0], listOLists[1]);
+            for (var i = 2; i < listOLists.length; ++i){
+                baselist = intersect_safe(baselist, listOLists[i]);
+            }
+            writeList(baselist);
+        }
+        }
 
 
 
 </script>
 
 Enter Query Terms:<br>
-<input type="text" id="queryBox" onchange = updateQuery()> <br> <button id="Submit">Do Query</button>
+<input type="text" id="queryBox" onchange = updateQuery()> <br> <button id="Submit" onclick = doQuery()
+                                                                         disabled = true>Do Query</button>
 <div>
 </div>
 <p id = "results"></p>
